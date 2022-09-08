@@ -1,11 +1,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
 
-mongoose.connect('mongodb+srv://Elric_LHZ:elricocr0@cluster0.xmxcea2.mongodb.net/?retryWrites=true&w=majority',
+mongoose.connect('mongodb://Addict_95:jesuisunelicorne0@ac-nq9oc5b-shard-00-00.nkcjmkr.mongodb.net:27017,ac-nq9oc5b-shard-00-01.nkcjmkr.mongodb.net:27017,ac-nq9oc5b-shard-00-02.nkcjmkr.mongodb.net:27017/?ssl=true&replicaSet=atlas-g7cw20-shard-0&authSource=admin&retryWrites=true&w=majority',
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
@@ -26,5 +27,6 @@ app.use(bodyParser.json());
 
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 module.exports = app;
