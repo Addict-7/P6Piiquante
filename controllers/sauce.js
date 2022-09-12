@@ -3,11 +3,11 @@ const fs = require('fs');
 
 
 exports.createSauce = (req, res, next) => {
-    const sauceObject = JSON.parse(req.body.sauce);
+    const sauceObject = req.body;
     delete sauceObject._id;
+    delete sauceObject._userId;
     const sauce = new Sauce ({
         ...sauceObject,
-        userId: req.auth.userId,
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     });
     sauce.save()
@@ -17,7 +17,7 @@ exports.createSauce = (req, res, next) => {
 
 exports.modifySauce = (req, res, next) => {
     const sauceObject = req.file ? {
-        ...JSON.parse(req.body.thing),
+        ...JSON.parse(req.body.sauce),
         imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
     } : { ...req.body };
     delete sauceObject._userId;
