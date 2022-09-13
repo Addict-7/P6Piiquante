@@ -65,6 +65,29 @@ exports.getAllSauces = (req, res, next) => {
         .catch(error => res.status(400).json({ error }));
 };
 
-exports.likeSauce = (req, res, next) => {
-    Sauce.likeOne()
-}
+exports.likeDislikesSauce = (req, res, next) => {
+    let userId = req.body.userId;
+    let likeStatus = req.body.like;
+
+    if (likeStatus === 1) {
+        Sauce.updateOne({ _id: req.params.id }, { $inc:{likes:+1}, $push:{usersLiked:userId}})
+        .then(() => res.status(201).json({ message: 'Produit liké !'}))
+        .catch(error => res.status(400).json({ error }))
+    }
+    if (likeStatus === 0) {
+        Sauces.updateOne({ _id: req.params.id }, { $inc: { likes: -1 }, $pull: { usersLiked:userId} })
+            .then(() => {
+                return Sauces.updateOne(
+                    { _id: req.params.id },
+                    { $inc: { dislikes: +1 }, $pull: { usersDisliked: userId } }
+                );
+            })
+            .then(() => {
+                res.status(201).json({ message: ['Like annulé !', 'Dislike annulé !'] });
+            })
+            .catch((error) => res.status(400).json({ error }));
+    }
+    if (likeStatus === -1) {
+        Sauce.updateOne({ _id: req.params.id }, { $inc: {dislikes: -1}, $pull:{ usersLiked:userId} })
+    }
+};
