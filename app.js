@@ -12,7 +12,7 @@ mongoose.connect('mongodb://Addict_95:jesuisunelicorne0@ac-nq9oc5b-shard-00-00.n
   .catch(() => console.log('Connexion à MongoDB échouée !'));
 
 const app = express();
-
+app.use(express.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 app.use(express.json());
 
 app.use((req, res, next) => {
@@ -20,7 +20,7 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
-  });
+});
 
 app.use('/api/sauces', sauceRoutes);
 app.use('/api/auth', userRoutes);
