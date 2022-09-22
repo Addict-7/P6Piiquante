@@ -9,7 +9,7 @@ module.exports = (req, res, next) => {
     } else {
         res.status(200).json({ message: 'Compte crée !'});
     }
-}; 
+};
 
 
 
