@@ -2,10 +2,8 @@ const express = require('express');
 require("dotenv").config();
 const mongoose = require('mongoose');
 const path = require('path');
-const helmet = require('helmet');
+//const helmet = require('helmet');
 const cors = require('cors');
-
-
 
 const sauceRoutes = require('./routes/sauce');
 const userRoutes = require('./routes/user');
@@ -24,7 +22,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true })); // parse application/x-www-form-urlencoded
 app.use(express.json());
 
-app.use(helmet());
+//app.use(helmet());
 app.use(cors());
 
 app.use((req, res, next) => {
