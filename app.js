@@ -15,7 +15,7 @@ mongoose.connect(`mongodb://${process.env.USERID}:${process.env.PASSWORD}@ac-nq9
   { useNewUrlParser: true,
     useUnifiedTopology: true })
   .then(() => console.log('Connexion à MongoDB réussie !'))
-  .catch(() => console.log('Connexion à MongoDB échouée !'));
+  .catch((error) => console.log(error));
 
 const app = express();
 
